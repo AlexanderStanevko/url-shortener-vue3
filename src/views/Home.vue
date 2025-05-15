@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import ShortenerForm from '../components/url/ShortenerForm.vue';
@@ -16,7 +16,6 @@ const redirectToDashboard = () => {
 
 <template>
   <div class="flex flex-col min-h-[calc(100vh-4rem)]">
-    <!-- Hero Section -->
     <section class="py-12 md:py-20 bg-gradient-to-br from-primary-500 to-primary-700 dark:from-primary-700 dark:to-primary-900 text-white">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto text-center">
@@ -36,14 +35,12 @@ const redirectToDashboard = () => {
       </div>
     </section>
     
-    <!-- Shortener Section -->
     <section class="py-12 -mt-8">
       <div class="container mx-auto px-4">
         <ShortenerForm />
       </div>
     </section>
     
-    <!-- Features Section -->
     <section class="py-12 bg-neutral-50 dark:bg-neutral-800/30">
       <div class="container mx-auto px-4">
         <h2 class="text-3xl font-bold text-center mb-12">
@@ -90,7 +87,6 @@ const redirectToDashboard = () => {
       </div>
     </section>
     
-    <!-- CTA Section -->
     <section class="py-12 md:py-20 bg-primary-500 dark:bg-primary-700 text-white">
       <div class="container mx-auto px-4 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-4">

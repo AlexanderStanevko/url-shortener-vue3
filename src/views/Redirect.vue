@@ -18,7 +18,6 @@ onMounted(async () => {
   const url = urlStore.getUrlBySlug(slug);
   
   if (!url) {
-    // URL not found
     router.push({
       name: 'NotFound',
       params: { pathMatch: route.path.substring(1).split('/') },
@@ -28,10 +27,7 @@ onMounted(async () => {
     return;
   }
   
-  // Record click
   await urlStore.recordClick(url.id, document.referrer || null);
-  
-  // Redirect to the original URL
   window.location.href = url.originalUrl;
 });
 </script>

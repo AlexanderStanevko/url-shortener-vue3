@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import type { ShortUrl, ClickEvent } from "../types";
 import { useToastStore } from "./toast";
 import { generateId, generateSlug } from "../utils/helpers";
@@ -7,13 +7,11 @@ import { generateId, generateSlug } from "../utils/helpers";
 export const useUrlStore = defineStore("urls", () => {
   const toastStore = useToastStore();
 
-  // State
   const urls = ref<ShortUrl[]>([]);
   const clickEvents = ref<ClickEvent[]>([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
 
-  // Initialize from localStorage
   try {
     const savedUrls = localStorage.getItem("shortUrls");
     const savedClicks = localStorage.getItem("clickEvents");
@@ -29,13 +27,11 @@ export const useUrlStore = defineStore("urls", () => {
     console.error("Failed to parse saved data from localStorage", e);
   }
 
-  // Private methods
   const saveToLocalStorage = () => {
     localStorage.setItem("shortUrls", JSON.stringify(urls.value));
     localStorage.setItem("clickEvents", JSON.stringify(clickEvents.value));
   };
 
-  // Getters
   const getUrlById = (id: string) => {
     return urls.value.find((url) => url.id === id) || null;
   };
@@ -52,7 +48,6 @@ export const useUrlStore = defineStore("urls", () => {
     return clickEvents.value.filter((click) => click.urlId === urlId);
   };
 
-  // Actions
   const createShortUrl = async (
     originalUrl: string,
     userId: string | null = null,
@@ -63,7 +58,6 @@ export const useUrlStore = defineStore("urls", () => {
     error.value = null;
 
     try {
-      // Validate URL
       try {
         new URL(originalUrl);
       } catch (e) {
@@ -76,10 +70,8 @@ export const useUrlStore = defineStore("urls", () => {
         return null;
       }
 
-      // Create slug (either custom or generated)
       let slug = customSlug?.trim() || generateSlug();
 
-      // Check if slug already exists
       const slugExists = urls.value.some((url) => url.slug === slug);
       if (slugExists && customSlug) {
         error.value = "Custom slug already in use";
@@ -90,14 +82,12 @@ export const useUrlStore = defineStore("urls", () => {
         });
         return null;
       } else if (slugExists) {
-        // Generate a new slug if the randomly generated one exists
         slug = generateSlug();
       }
 
-      // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 600));
 
-      // Create new short URL
+
       const newUrl: ShortUrl = {
         id: generateId(),
         userId,
@@ -110,10 +100,8 @@ export const useUrlStore = defineStore("urls", () => {
         clicks: 0,
       };
 
-      // Add to state
       urls.value.push(newUrl);
 
-      // Save to localStorage
       saveToLocalStorage();
 
       toastStore.addToast({
@@ -153,7 +141,6 @@ export const useUrlStore = defineStore("urls", () => {
         return false;
       }
 
-      // Check if slug is being updated and if it already exists
       if (updates.slug && updates.slug !== urls.value[index].slug) {
         const slugExists = urls.value.some(
           (url) => url.slug === updates.slug && url.id !== id
@@ -169,21 +156,17 @@ export const useUrlStore = defineStore("urls", () => {
           return false;
         }
 
-        // Update shortUrl if slug is changed
         updates.shortUrl = `https://sho.rt/${updates.slug}`;
       }
 
-      // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Update the URL
       urls.value[index] = {
         ...urls.value[index],
         ...updates,
         updatedAt: new Date().toISOString(),
       };
 
-      // Save to localStorage
       saveToLocalStorage();
 
       toastStore.addToast({
@@ -223,18 +206,14 @@ export const useUrlStore = defineStore("urls", () => {
         return false;
       }
 
-      // Simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // Remove URL
       urls.value.splice(index, 1);
 
-      // Remove related click events
       clickEvents.value = clickEvents.value.filter(
         (click) => click.urlId !== id
       );
 
-      // Save to localStorage
       saveToLocalStorage();
 
       toastStore.addToast({
@@ -265,23 +244,18 @@ export const useUrlStore = defineStore("urls", () => {
         return false;
       }
 
-      // Increment click count
       urls.value[urlIndex].clicks += 1;
 
-      // Create click event
       const clickEvent: ClickEvent = {
         id: generateId(),
         urlId,
         timestamp: new Date().toISOString(),
         referrer,
         userAgent: navigator.userAgent || null,
-        ip: null, // In a real app, this would come from the server
+        ip: null,
       };
 
-      // Add to click events
       clickEvents.value.push(clickEvent);
-
-      // Save to localStorage
       saveToLocalStorage();
 
       return true;
@@ -292,15 +266,13 @@ export const useUrlStore = defineStore("urls", () => {
   };
 
   const exportClicksAsCsv = (urlId: string): string => {
-    const url = getUrlById.value(urlId);
+    const url = getUrlById(urlId);
     if (!url) return "";
 
-    const clicks = getClicksForUrl.value(urlId);
+    const clicks = getClicksForUrl(urlId);
 
-    // Create CSV header
     let csv = "ID,URL,Timestamp,Referrer,User Agent\n";
 
-    // Add data rows
     clicks.forEach((click) => {
       csv += `${click.id},${url.shortUrl},${click.timestamp},${
         click.referrer || "N/A"

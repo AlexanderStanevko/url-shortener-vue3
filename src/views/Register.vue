@@ -14,7 +14,6 @@ const isLoading = ref(false);
 const error = ref('');
 
 const register = async () => {
-  // Basic validation
   if (!name.value || !email.value || !password.value) {
     error.value = 'Please fill in all required fields';
     return;

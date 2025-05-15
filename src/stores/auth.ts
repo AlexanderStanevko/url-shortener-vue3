@@ -7,12 +7,10 @@ import { generateId } from '../utils/helpers';
 export const useAuthStore = defineStore('auth', () => {
   const toastStore = useToastStore();
   
-  // State
   const user = ref<User | null>(null);
   const loading = ref(false);
   const error = ref<string | null>(null);
   
-  // Mock users for demo
   const mockUsers = [
     {
       id: '1',
@@ -30,7 +28,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   ];
   
-  // Initialize from localStorage if available
   try {
     const savedUser = localStorage.getItem('authUser');
     if (savedUser) {
@@ -40,27 +37,21 @@ export const useAuthStore = defineStore('auth', () => {
     console.error('Failed to parse saved user from localStorage', e);
   }
   
-  // Getters
   const isAuthenticated = computed(() => !!user.value);
-  
-  // Actions
+
   const login = async (email: string, password: string) => {
     loading.value = true;
     error.value = null;
-    
-    // Simulate API call delay
+
     await new Promise(resolve => setTimeout(resolve, 800));
     
     try {
-      // Find user with matching credentials
       const foundUser = mockUsers.find(u => u.email === email && u.password === password);
       
       if (foundUser) {
-        // Create user object without the password
         const { password, ...userWithoutPassword } = foundUser;
         user.value = userWithoutPassword as User;
         
-        // Save to localStorage
         localStorage.setItem('authUser', JSON.stringify(user.value));
         
         toastStore.addToast({
@@ -96,11 +87,9 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true;
     error.value = null;
     
-    // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     try {
-      // Check if email is already taken
       if (mockUsers.some(u => u.email === email)) {
         error.value = 'Email is already taken';
         toastStore.addToast({
@@ -111,7 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
         return false;
       }
       
-      // Create new user
       const newUser = {
         id: generateId(),
         name,
@@ -120,14 +108,11 @@ export const useAuthStore = defineStore('auth', () => {
         createdAt: new Date().toISOString(),
       };
       
-      // Add to mock users (in a real app, this would be saved to a database)
       mockUsers.push(newUser);
       
-      // Log the user in
       const { password: _, ...userWithoutPassword } = newUser;
       user.value = userWithoutPassword as User;
       
-      // Save to localStorage
       localStorage.setItem('authUser', JSON.stringify(user.value));
       
       toastStore.addToast({
@@ -162,7 +147,6 @@ export const useAuthStore = defineStore('auth', () => {
   };
   
   const checkAuth = () => {
-    // In a real app, this would validate the token with the server
     const savedUser = localStorage.getItem('authUser');
     
     if (savedUser) {

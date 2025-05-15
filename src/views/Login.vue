@@ -40,7 +40,6 @@ const login = async () => {
   }
 };
 
-// For demo purposes, provide easy access to demo credentials
 const fillDemoCredentials = () => {
   email.value = 'demo@example.com';
   password.value = 'password123';

@@ -26,15 +26,10 @@ const exportAnalytics = async () => {
   isExporting.value = true;
 
   try {
-    // Generate CSV
     const csv = urlStore.exportClicksAsCsv(urlId.value);
-
-    // Create filename
     const filename = `analytics_${url.value.slug}_${
       new Date().toISOString().split("T")[0]
     }.csv`;
-
-    // Download file
     downloadAsFile(csv, filename);
 
     toastStore.addToast({
@@ -60,8 +55,6 @@ const goBack = () => {
 
 onMounted(async () => {
   isLoading.value = true;
-
-  // In a real app, we would load data from the server here
   await new Promise((resolve) => setTimeout(resolve, 500));
 
   if (!url.value) {
@@ -80,7 +73,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <!-- Loading State -->
     <div v-if="isLoading" class="text-center py-12">
       <div
         class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600"
@@ -91,7 +83,6 @@ onMounted(async () => {
     </div>
 
     <template v-else-if="url">
-      <!-- Header with Back Button -->
       <div class="flex items-center mb-6">
         <button
           @click="goBack"
@@ -120,7 +111,6 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- Stats Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="card bg-white dark:bg-neutral-800 p-5">
           <h2
@@ -160,7 +150,6 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- Chart Section -->
       <div class="card bg-white dark:bg-neutral-800 mb-6">
         <div class="flex justify-between items-center mb-4">
           <h2
@@ -242,7 +231,6 @@ onMounted(async () => {
         <ClicksChart :clicks="clicks" :type="chartType" />
       </div>
 
-      <!-- Click Log Table -->
       <div class="card bg-white dark:bg-neutral-800">
         <h2
           class="text-lg font-medium text-neutral-900 dark:text-neutral-100 mb-4"

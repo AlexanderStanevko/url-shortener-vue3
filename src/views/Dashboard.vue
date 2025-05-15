@@ -84,18 +84,7 @@ const averageClicksPerUrl = computed(() =>
   totalUrls.value ? (totalClicks.value / totalUrls.value).toFixed(1) : '0'
 );
 
-// Change sort order
-const changeSortBy = (sort: string) => {
-  if (sortBy.value === sort) {
-    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc';
-  } else {
-    sortBy.value = sort;
-    sortOrder.value = 'desc';
-  }
-};
-
-// Handle URL deleted
-const handleUrlDeleted = (id: string) => {
+const handleUrlDeleted = (_: string) => {
   toastStore.addToast({
     type: 'success',
     message: 'URL deleted successfully',
@@ -103,7 +92,6 @@ const handleUrlDeleted = (id: string) => {
   });
 };
 
-// Clear filters
 const clearFilters = () => {
   search.value = '';
   selectedTag.value = '';
@@ -113,7 +101,6 @@ const clearFilters = () => {
 
 onMounted(async () => {
   isLoading.value = true;
-  // In a real app, we would load URLs from the server here
   await new Promise(resolve => setTimeout(resolve, 500));
   isLoading.value = false;
 });
@@ -128,12 +115,10 @@ onMounted(async () => {
       </p>
     </div>
     
-    <!-- Shortener Form -->
     <div class="mb-8">
       <ShortenerForm />
     </div>
     
-    <!-- Stats Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
       <div class="card bg-white dark:bg-neutral-800 p-5">
         <h2 class="text-sm font-medium text-neutral-500 dark:text-neutral-400 uppercase">Total URLs</h2>
@@ -151,7 +136,6 @@ onMounted(async () => {
       </div>
     </div>
     
-    <!-- Filter and Sort -->
     <div class="mb-6 bg-white dark:bg-neutral-800 rounded-lg shadow p-4">
       <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
         <div class="flex-1">
@@ -222,8 +206,7 @@ onMounted(async () => {
         </button>
       </div>
     </div>
-    
-    <!-- URL List -->
+
     <div v-if="isLoading" class="text-center py-12">
       <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary-600"></div>
       <p class="mt-2 text-neutral-600 dark:text-neutral-400">Loading your URLs...</p>

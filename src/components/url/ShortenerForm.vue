@@ -94,7 +94,6 @@ const resetForm = () => {
       <h2 class="text-xl font-semibold mb-4">Shorten Your URL</h2>
       
       <div class="space-y-4">
-        <!-- URL Input -->
         <div>
           <label for="url" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">URL to shorten</label>
           <input
@@ -108,7 +107,6 @@ const resetForm = () => {
           />
         </div>
         
-        <!-- Custom options (visible only for authenticated users) -->
         <div v-if="isAuthenticated" class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label for="customSlug" class="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">Custom slug (optional)</label>
@@ -135,7 +133,6 @@ const resetForm = () => {
           </div>
         </div>
         
-        <!-- Submit Button -->
         <div class="flex justify-end">
           <button
             @click="shortenUrl"
@@ -151,7 +148,6 @@ const resetForm = () => {
         </div>
       </div>
       
-      <!-- Result -->
       <div v-if="shortUrl" class="mt-6 p-4 bg-neutral-50 dark:bg-neutral-700 rounded-md">
         <div class="text-sm text-neutral-500 dark:text-neutral-400 mb-1">Your shortened URL:</div>
         <div class="flex items-center">

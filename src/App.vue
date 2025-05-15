@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
 import { useThemeStore } from './stores/theme';
 import { useToastStore } from './stores/toast';
 import AppHeader from './components/layout/AppHeader.vue';
@@ -9,17 +8,14 @@ import Toast from './components/common/Toast.vue';
 import Modal from './components/common/Modal.vue';
 import { useModalStore } from './stores/modal';
 
-const router = useRouter();
 const themeStore = useThemeStore();
 const toastStore = useToastStore();
 const modalStore = useModalStore();
 
-// Initialize theme
 onMounted(() => {
   themeStore.initialize();
 });
 
-// Watch for theme changes
 watch(() => themeStore.darkMode, (isDark) => {
   if (isDark) {
     document.documentElement.classList.add('dark');
@@ -43,7 +39,6 @@ watch(() => themeStore.darkMode, (isDark) => {
     
     <AppFooter />
     
-    <!-- Toast Notifications -->
     <div class="fixed bottom-4 right-4 z-50">
       <transition-group name="toast">
         <Toast 
@@ -55,7 +50,6 @@ watch(() => themeStore.darkMode, (isDark) => {
       </transition-group>
     </div>
     
-    <!-- Modal Component -->
     <Modal 
       v-if="modalStore.isOpen" 
       :title="modalStore.title"

@@ -1,10 +1,8 @@
-// Generate a random ID
 export const generateId = (): string => {
   return Math.random().toString(36).substring(2, 15) + 
          Math.random().toString(36).substring(2, 15);
 };
 
-// Generate a random slug
 export const generateSlug = (length: number = 6): string => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -16,7 +14,6 @@ export const generateSlug = (length: number = 6): string => {
   return result;
 };
 
-// Format date
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   return new Intl.DateTimeFormat('en-US', {
@@ -28,7 +25,6 @@ export const formatDate = (dateString: string): string => {
   }).format(date);
 };
 
-// Format relative time
 export const formatRelativeTime = (dateString: string): string => {
   const date = new Date(dateString);
   const now = new Date();
@@ -62,13 +58,13 @@ export const formatRelativeTime = (dateString: string): string => {
   return `${diffInYears} year${diffInYears !== 1 ? 's' : ''} ago`;
 };
 
-// Truncate text
+
 export const truncateText = (text: string, maxLength: number = 50): string => {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 };
 
-// Copy text to clipboard
+
 export const copyToClipboard = async (text: string): Promise<boolean> => {
   try {
     await navigator.clipboard.writeText(text);
@@ -79,7 +75,6 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
   }
 };
 
-// Download data as file
 export const downloadAsFile = (data: string, filename: string, type: string = 'text/csv') => {
   const blob = new Blob([data], { type });
   const url = URL.createObjectURL(blob);

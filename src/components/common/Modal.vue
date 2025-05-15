@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, watchEffect, computed } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 
 const props = defineProps<{
   title: string;
@@ -56,14 +56,14 @@ onBeforeUnmount(() => {
     <div
       class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
     >
-      <!-- Background overlay -->
+
       <div class="fixed inset-0 transition-opacity" aria-hidden="true">
         <div
           class="absolute inset-0 bg-neutral-900 opacity-75 dark:opacity-90"
         ></div>
       </div>
 
-      <!-- Modal -->
+ 
       <div
         ref="modal"
         class="inline-block align-bottom bg-white dark:bg-neutral-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
         aria-modal="true"
         aria-labelledby="modal-headline"
       >
-        <!-- Header -->
+  
         <div
           class="px-4 py-3 border-b border-neutral-200 dark:border-neutral-700 flex justify-between items-center"
         >
@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
           </button>
         </div>
 
-        <!-- Content -->
+
         <div class="px-4 py-3">
           <p v-if="content" class="text-neutral-700 dark:text-neutral-300">
             {{ content }}
@@ -113,19 +113,8 @@ onBeforeUnmount(() => {
             v-bind="componentProps"
             @close="close"
           />
-
-          <!-- <component
-            v-if="component"
-            :is="component"
-            v-bind="props"
-            @close="close"
-          /> -->
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Add transition styles */
-</style>

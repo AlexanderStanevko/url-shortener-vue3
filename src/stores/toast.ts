@@ -4,10 +4,8 @@ import type { Toast } from '../types';
 import { generateId } from '../utils/helpers';
 
 export const useToastStore = defineStore('toast', () => {
-  // State
   const toasts = ref<Toast[]>([]);
   
-  // Actions
   const addToast = (toast: Omit<Toast, 'id'>) => {
     const id = generateId();
     const newToast: Toast = {
@@ -17,7 +15,6 @@ export const useToastStore = defineStore('toast', () => {
     
     toasts.value.push(newToast);
     
-    // Auto-remove toast after duration
     if (toast.duration) {
       setTimeout(() => {
         removeToast(id);

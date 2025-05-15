@@ -25,7 +25,6 @@ const copied = ref(false);
 const isDeleting = ref(false);
 
 const formattedDate = computed(() => formatRelativeTime(props.url.createdAt));
-const tagsDisplay = computed(() => props.url.tags.join(', ') || 'No tags');
 const originalUrl = computed(() => truncateText(props.url.originalUrl, 40));
 
 const copyShortUrl = async () => {

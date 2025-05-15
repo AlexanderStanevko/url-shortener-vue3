@@ -3,7 +3,6 @@ import { ref, markRaw } from 'vue';
 import { generateId } from '../utils/helpers';
 
 export const useModalStore = defineStore('modal', () => {
-  // State
   const isOpen = ref(false);
   const id = ref('');
   const title = ref('');
@@ -11,7 +10,6 @@ export const useModalStore = defineStore('modal', () => {
   const component = ref<any>(null);
   const props = ref<any>(null);
   
-  // Actions
   const openModal = (options: {
     title: string,
     content?: string,
@@ -29,7 +27,6 @@ export const useModalStore = defineStore('modal', () => {
   const closeModal = () => {
     isOpen.value = false;
     
-    // Reset values after closing animation completes
     setTimeout(() => {
       id.value = '';
       title.value = '';

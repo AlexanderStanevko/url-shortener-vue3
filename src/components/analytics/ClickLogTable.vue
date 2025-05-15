@@ -108,7 +108,6 @@ const formatUserAgent = (userAgent: string | null) => {
       </tbody>
     </table>
     
-    <!-- Pagination -->
     <div v-if="totalPages > 1" class="flex items-center justify-between border-t border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 px-4 py-3 sm:px-6">
       <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
